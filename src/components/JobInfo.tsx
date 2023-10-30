@@ -1,21 +1,9 @@
-import { useState } from 'react'
 import CustomInput from './CustomInput'
 import { v4 as uuid } from 'uuid'
 
-export default function JobInfo() {
-    const [jobs, setJobs] = useState([EmptyJob()]);
-
+export function JobDisplay({ jobs }) {
     return (
-    <>
-        <JobEntry jobs={jobs} setJobs={setJobs}/>
-        <JobDisplay jobs={jobs}/>
-    </>
-    );
-}
-
-function JobDisplay({ jobs }) {
-    return (
-        <ul>
+        <ul className='display__job'>
             {jobs.map(job => (
                 <li key={job.id}> 
                     {job.company} {job.position} {job.description} {job.start} {job.finish} 
@@ -25,27 +13,7 @@ function JobDisplay({ jobs }) {
     );
 }
 
-type JobExperience = {
-    id: string,
-    company: string,
-    position: string,
-    description: string,
-    start: string,
-    finish: string,
-}
-
-function EmptyJob(): JobExperience {
-    return {
-        id: uuid(),
-        company: "",
-        position: "",
-        description: "",
-        start: "",
-        finish: "",
-    };
-}
-
-function JobEntry({jobs, setJobs}) {
+export function JobEntry({jobs, setJobs}) {
     function handleKeyChange(key, newValue, id) {
         const newJobs = jobs.map(e => {
             if (e.id === id) {
@@ -62,7 +30,9 @@ function JobEntry({jobs, setJobs}) {
     }
     
     return (
-        <ul>
+    <>
+        <h2>Job Info</h2>
+        <ul className='entry__job'>
             {jobs.map(job => (
                 <li key={job.id}>
                     <CustomInput value={job.company} inputName={"Company"} setValue={(value) => handleKeyChange("company", value, job.id)}/>
@@ -72,7 +42,29 @@ function JobEntry({jobs, setJobs}) {
                     <CustomInput value={job.finish} inputName={"Finish Date"} setValue={(value) => handleKeyChange("finish", value, job.id)}/>
                 </li>
             ))}
-            <button onClick={addEmptyJob}>Add</button>
+            <button className='addButt' onClick={addEmptyJob}>Add</button>
         </ul>
+    </>
     );
 }
+
+type JobExperience = {
+    id: string,
+    company: string,
+    position: string,
+    description: string,
+    start: string,
+    finish: string,
+}
+
+export function EmptyJob(): JobExperience {
+    return {
+        id: uuid(),
+        company: "",
+        position: "",
+        description: "",
+        start: "",
+        finish: "",
+    };
+}
+

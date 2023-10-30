@@ -1,21 +1,9 @@
-import { useState } from 'react'
 import CustomInput from './CustomInput'
 import { v4 as uuid } from 'uuid'
 
-export default function EducationInfo() {
-    const [educations, setEducations] = useState([EmptyEducation()]);
-
+export function EducationDisplay({ educations }) {
     return (
-    <>
-        <EducationEntry educations={educations} setEducations={setEducations}/>
-        <EducationDisplay educations={educations}/>
-    </>
-    );
-}
-
-function EducationDisplay({ educations }) {
-    return (
-        <ul>
+        <ul className='display__education'>
             {educations.map(education => (
                 <li key={education.id}> 
                     {education.name} {education.major} {education.start} {education.finish} 
@@ -25,25 +13,7 @@ function EducationDisplay({ educations }) {
     );
 }
 
-type EducationExperience = {
-    id: string,
-    name: string,
-    major: string,
-    start: string,
-    finish: string,
-}
-
-function EmptyEducation(): EducationExperience {
-    return {
-        id: uuid(),
-        name: "",
-        major: "",
-        start: "",
-        finish: "",
-    };
-}
-
-function EducationEntry({educations, setEducations}) {
+export function EducationEntry({educations, setEducations}) {
     function handleKeyChange(key, newValue, id) {
         const newEducations = educations.map(e => {
             if (e.id === id) {
@@ -60,7 +30,9 @@ function EducationEntry({educations, setEducations}) {
     }
     
     return (
-        <ul>
+        <>
+        <h2>Education</h2>
+        <ul className='entry__education'>
             {educations.map(education => (
                 <li key={education.id}>
                     <CustomInput value={education.name} inputName={"School Name"} setValue={(value) => handleKeyChange("name", value, education.id)}/>
@@ -69,7 +41,27 @@ function EducationEntry({educations, setEducations}) {
                     <CustomInput value={education.finish} inputName={"Finish Date"} setValue={(value) => handleKeyChange("finish", value, education.id)}/>
                 </li>
             ))}
-            <button onClick={addEmptyEducation}>Add</button>
+            <button className='addButt' onClick={addEmptyEducation}>Add</button>
         </ul>
+        </>
     );
 }
+
+type EducationExperience = {
+    id: string,
+    name: string,
+    major: string,
+    start: string,
+    finish: string,
+}
+
+export function EmptyEducation(): EducationExperience {
+    return {
+        id: uuid(),
+        name: "",
+        major: "",
+        start: "",
+        finish: "",
+    };
+}
+
