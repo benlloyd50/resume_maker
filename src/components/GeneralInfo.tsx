@@ -1,6 +1,17 @@
 import CustomInput from './CustomInput';
 
-export function GeneralInfoDisplay({ personal }) {
+interface GeneralInfo {
+    name: string;
+    email: string;
+    phoneNumber: string;
+}
+
+interface GeneralInfoDisplayProps {
+    personal: GeneralInfo;
+}
+
+
+export function GeneralInfoDisplay({ personal }: GeneralInfoDisplayProps) {
     return (
     <div className='display__general'>
         <h1>{personal.name}</h1>
@@ -10,8 +21,13 @@ export function GeneralInfoDisplay({ personal }) {
     );
 }
 
-export function GeneralInfoEntry({ personal, setPersonal }) {
-    function handleKeyChange(key, newValue) {
+interface GeneralInfoEntryProps {
+    personal: GeneralInfo;
+    setPersonal: React.Dispatch<React.SetStateAction<GeneralInfo>>;
+}
+
+export function GeneralInfoEntry({ personal, setPersonal }: GeneralInfoEntryProps) {
+    function handleKeyChange(key: keyof GeneralInfo, newValue: string) {
         setPersonal({ ...personal, [key]: newValue});
     }
 

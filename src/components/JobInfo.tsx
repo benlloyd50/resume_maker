@@ -1,7 +1,11 @@
 import CustomInput from './CustomInput'
 import { v4 as uuid } from 'uuid'
 
-export function JobDisplay({ jobs }) {
+interface JobDisplayProps {
+    jobs: JobExperience[];
+}
+
+export function JobDisplay({ jobs }: JobDisplayProps) {
     return (
         <ul className='display__job'>
             {jobs.map(job => (
@@ -13,8 +17,13 @@ export function JobDisplay({ jobs }) {
     );
 }
 
-export function JobEntry({jobs, setJobs}) {
-    function handleKeyChange(key, newValue, id) {
+interface JobEntryProps {
+    jobs: JobExperience[];
+    setJobs: React.Dispatch<React.SetStateAction<JobExperience[]>>;
+}
+
+export function JobEntry({jobs, setJobs}: JobEntryProps) {
+    function handleKeyChange(key: keyof JobExperience, newValue: string, id: string) {
         const newJobs = jobs.map(e => {
             if (e.id === id) {
                 return { ...e, [key]: newValue};
@@ -48,7 +57,7 @@ export function JobEntry({jobs, setJobs}) {
     );
 }
 
-type JobExperience = {
+interface JobExperience {
     id: string,
     company: string,
     position: string,

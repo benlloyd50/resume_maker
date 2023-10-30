@@ -2,7 +2,7 @@
 interface CustomInput {
     value: string,
     inputName: string,
-    setValue: React.Dispatch<React.SetStateAction<string>>,
+    setValue: (value: string) => void,
 }
 
 export default function CustomInput({ value, inputName, setValue }: CustomInput) {

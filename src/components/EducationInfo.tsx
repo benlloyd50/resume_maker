@@ -1,7 +1,11 @@
 import CustomInput from './CustomInput'
 import { v4 as uuid } from 'uuid'
 
-export function EducationDisplay({ educations }) {
+interface EducationDisplayProps {
+    educations: EducationExperience[];
+}
+
+export function EducationDisplay({ educations }: EducationDisplayProps) {
     return (
         <ul className='display__education'>
             {educations.map(education => (
@@ -13,8 +17,13 @@ export function EducationDisplay({ educations }) {
     );
 }
 
-export function EducationEntry({educations, setEducations}) {
-    function handleKeyChange(key, newValue, id) {
+interface EducationEntryProps {
+    educations: EducationExperience[];
+    setEducations: React.Dispatch<React.SetStateAction<EducationExperience[]>>;
+}
+
+export function EducationEntry({educations, setEducations}: EducationEntryProps) {
+    function handleKeyChange(key: keyof EducationExperience, newValue: string, id: string) {
         const newEducations = educations.map(e => {
             if (e.id === id) {
                 return { ...e, [key]: newValue};
@@ -47,12 +56,12 @@ export function EducationEntry({educations, setEducations}) {
     );
 }
 
-type EducationExperience = {
-    id: string,
-    name: string,
-    major: string,
-    start: string,
-    finish: string,
+interface EducationExperience {
+    id: string;
+    name: string;
+    major: string;
+    start: string;
+    finish: string;
 }
 
 export function EmptyEducation(): EducationExperience {
